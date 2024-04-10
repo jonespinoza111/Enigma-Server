@@ -5,6 +5,8 @@ const connectToDatabase = async () => {
   try {
     // Connect to the database
     const CONNECTION_URL = `mongodb+srv://${process.env.CLUSTER_USERNAME}:${process.env.CLUSTER_PASSWORD}@${process.env.CLUSTER_NAME}.oi0ce.mongodb.net/?retryWrites=true&w=majority&appName=${process.env.CLUSTER_DB}'`;
+
+    console.log('this is my connection_url: ', CONNECTION_URL);
     await mongoose.connect(CONNECTION_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,

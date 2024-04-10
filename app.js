@@ -25,6 +25,15 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Serve static files from the 'dist/store' directory
+app.use(express.static(path.join(__dirname, 'dist/store')));
+
+// Redirect all requests to the index.html file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/store/index.html'));
+});
+
+
 // Route handlers
 // app.use('/auth', authRoutes);
 app.use('/cart', cartRoutes);
@@ -38,12 +47,12 @@ app.use('/collections', collectionRoutes);
 
 // Error handling middleware (optional)
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error('Here is the error: ', err.stack);
   res.status(500).json({ message: 'Internal Server Error' });
 });
 
 // Start the server
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port ${port}`, process.env.CLUSTER_DB);
 });
